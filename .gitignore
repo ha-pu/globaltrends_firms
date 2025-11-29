@@ -1,0 +1,16 @@
+# History files
+.Rhistory
+
+# RStudio files
+.Rproj.user/
+.Rproj
+
+# Intermediate data files
+data
+
+# Database file
+db
+
+# .env files
+.env
+venv
