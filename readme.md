@@ -1,0 +1,3 @@
+# globaltrends firms
+
+
