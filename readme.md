@@ -30,10 +30,10 @@ project](https://github.com/ha-pu/globaltrends).
 
 ### Average Annual Volume of Internationalization
 
-![](readme_files/figure-commonmark/voi_annual_average-1.png)
+![](README_files/figure-commonmark/voi_annual_average-1.png)
 
 ## Degree of Internationalization
 
 ### Average Annual Degree of Internationalization
 
-![](readme_files/figure-commonmark/doi_annual_average-1.png)
+![](README_files/figure-commonmark/doi_annual_average-1.png)
