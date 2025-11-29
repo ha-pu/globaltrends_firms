@@ -25,3 +25,15 @@ project](https://github.com/ha-pu/globaltrends).
 
 - Last update of the data: 2025-11-29
 - Coverage of the data: 2010-2024
+
+## Volume of Internationalization
+
+### Average Annual Volume of Internationalization
+
+![](readme_files/figure-commonmark/voi_annual_average-1.png)
+
+## Degree of Internationalization
+
+### Average Annual Degree of Internationalization
+
+![](readme_files/figure-commonmark/doi_annual_average-1.png)

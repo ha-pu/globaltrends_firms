@@ -20,3 +20,69 @@ The **globaltrends Firms** data is part of the [globaltrends project](https://gi
 
 * Last update of the data: 2025-11-29
 * Coverage of the data: 2010-2024
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(lubridate)
+library(nanoparquet)
+library(tidyverse)
+
+df_voi <- read_parquet("firms_voi.parquet")
+df_doi <- read_parquet("firms_doi.parquet")
+```
+
+## Volume of Internationalization
+
+### Average Annual Volume of Internationalization
+
+```{r}
+#| label: voi_annual_average
+#| echo: false
+#| message: false
+
+df_voi %>%
+    filter(voi > 0) %>%
+    mutate(year = year(date)) %>%
+    summarise(
+        voi = mean(voi),
+        .by = year
+    ) %>%
+    ggplot(aes(x = year, y = voi)) +
+    geom_line() +
+    geom_smooth() +
+    labs(
+        x = NULL,
+        y = "Volume of Internationalization"
+    ) +
+    theme_bw()
+```
+
+## Degree of Internationalization
+
+### Average Annual Degree of Internationalization
+
+```{r}
+#| label: doi_annual_average
+#| echo: false
+#| message: false
+
+df_doi %>%
+    filter(gini > 0) %>%
+    mutate(year = year(date)) %>%
+    summarise(
+        gini = mean(gini),
+        .by = year
+    ) %>%
+    ggplot(aes(x = year, y = gini)) +
+    geom_line() +
+    geom_smooth() +
+    labs(
+        x = NULL,
+        y = "Degree of Internationalization",
+        caption = "DOI Measured as Inverted Gini Coefficient"
+    ) +
+    theme_bw()
+```
