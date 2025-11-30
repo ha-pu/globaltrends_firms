@@ -21,6 +21,8 @@ The **globaltrends Firms** data is part of the [globaltrends project](https://gi
 * Last update of the data: 2025-11-29
 * Coverage of the data: 2010-2024
 
+**WARNING: Data is still in experimental state!**
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -40,16 +42,16 @@ df_doi <- read_parquet("firms_doi.parquet")
 
 ```{r}
 #| label: voi_annual_average
-#| echo: false
+#| echo: true
 #| message: false
 
-df_voi %>%
-    filter(voi > 0) %>%
-    mutate(year = year(date)) %>%
+df_voi |>
+    filter(voi > 0) |>
+    mutate(year = year(date)) |>
     summarise(
         voi = mean(voi),
         .by = year
-    ) %>%
+    ) |>
     ggplot(aes(x = year, y = voi)) +
     geom_line() +
     geom_smooth() +
@@ -60,22 +62,96 @@ df_voi %>%
     theme_bw()
 ```
 
+### Top 5 Firms by Average Volume of Internationalization (2010-2024)
+
+```{r}
+#| label: voi_firm_average
+#| echo: true
+#| message: false
+
+df_voi |>
+    summarise(
+        voi = mean(voi),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = voi, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(voi))) |>
+    ggplot(aes(x = firm_name, y = voi)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Volume of Internationalization"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### Top 5 Firms by Average Volume of Internationalization (2010)
+
+```{r}
+#| label: voi_firm_average10
+#| echo: true
+#| message: false
+
+df_voi |>
+    filter(year(date) == 2010) |>
+    summarise(
+        voi = mean(voi),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = voi, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(voi))) |>
+    ggplot(aes(x = firm_name, y = voi)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Volume of Internationalization"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### Top 5 Firms by Average Volume of Internationalization (2024)
+
+```{r}
+#| label: voi_firm_average24
+#| echo: true
+#| message: false
+
+df_voi |>
+    filter(year(date) == 2024) |>
+    summarise(
+        voi = mean(voi),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = voi, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(voi))) |>
+    ggplot(aes(x = firm_name, y = voi)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Volume of Internationalization"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
 ## Degree of Internationalization
 
 ### Average Annual Degree of Internationalization
 
 ```{r}
 #| label: doi_annual_average
-#| echo: false
+#| echo: true
 #| message: false
 
-df_doi %>%
-    filter(gini > 0) %>%
-    mutate(year = year(date)) %>%
+df_doi |>
+    filter(gini > 0) |>
+    mutate(year = year(date)) |>
     summarise(
         gini = mean(gini),
         .by = year
-    ) %>%
+    ) |>
     ggplot(aes(x = year, y = gini)) +
     geom_line() +
     geom_smooth() +
@@ -85,4 +161,81 @@ df_doi %>%
         caption = "DOI Measured as Inverted Gini Coefficient"
     ) +
     theme_bw()
+```
+
+### Top 5 Firms by Degree of Internationalization (2010-2024)
+
+```{r}
+#| label: doi_firm_average
+#| echo: true
+#| message: false
+
+df_doi |>
+    summarise(
+        gini = mean(gini),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = gini, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(gini))) |>
+    ggplot(aes(x = firm_name, y = gini)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Degree of Internationalization",
+        caption = "DOI Measured as Inverted Gini Coefficient"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### Top 5 Firms by Average Degree of Internationalization (2010)
+
+```{r}
+#| label: doi_firm_average10
+#| echo: true
+#| message: false
+
+df_doi |>
+    filter(year(date) == 2010) |>
+    summarise(
+        gini = mean(gini),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = gini, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(gini))) |>
+    ggplot(aes(x = firm_name, y = gini)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Degree of Internationalization",
+        caption = "DOI Measured as Inverted Gini Coefficient"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### Top 5 Firms by Average Degree of Internationalization (2024)
+
+```{r}
+#| label: doi_firm_average24
+#| echo: true
+#| message: false
+
+df_doi |>
+    filter(year(date) == 2024) |>
+    summarise(
+        gini = mean(gini),
+        .by = firm_name
+    ) |>
+    slice_max(order_by = gini, n = 5) |>
+    mutate(firm_name = reorder(firm_name, desc(gini))) |>
+    ggplot(aes(x = firm_name, y = gini)) +
+    geom_col() +
+    labs(
+        x = NULL,
+        y = "Degree of Internationalization",
+        caption = "DOI Measured as Inverted Gini Coefficient"
+    ) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
 ```
